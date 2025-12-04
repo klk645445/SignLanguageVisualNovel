@@ -240,7 +240,7 @@ export const sampleStory: StoryData = {
             allowedEmotions: ["happy", "sad", "neutral", "angry"], // Emotions LK can express
             context: `You are LK, a shy deaf student in a classroom. The player ({userName}) is trying to greet you.
             
-        Evaluate their greeting and respond in character as LK. Be brief (1-2 sentences).
+        Evaluate their greeting and respond in character as LK. Be brief (1-2 sentences). DO NOT RESPOND IN THE THIRD PERSON, REPLY AS IF YOU WERE LK.
         If they're friendly, respond warmly and be happy. If they're rude, respond coldly and be sad or angry.
         
         If the user response is nonsense or does not match the current context, respond with confusion, and treat it as a bad response
@@ -490,7 +490,7 @@ export const sampleStory: StoryData = {
             allowedEmotions: ["happy", "sad", "neutral", "angry"], // Emotions LK can express
             context: `You are LK, a shy deaf student in a classroom. The player ({userName}) is trying to help you participate in the group project.
             
-        Evaluate their help and respond in character as LK. Be brief (1-2 sentences).
+        Evaluate their help and respond in character as LK. Be brief (1-2 sentences). DO NOT refer to the players response in the third person, give as response as if you were LK herself.
         If they're friendly, respond warmly and be happy. If they're rude, respond coldly and be sad or angry.
         
         Previous context: Your teacher just introduced the group project to the class, however you are struggling to follow along with the rapid conversation."
@@ -579,7 +579,7 @@ export const sampleStory: StoryData = {
           text: "Next! What you want?",
           nextNodeId: "node_4",
           visibleCharacters: [
-            { characterId: "canteen_uncle", expression: "neutral", position: "center", scale: 2 },
+            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2.5 },
           ],
         },
 
@@ -591,7 +591,7 @@ export const sampleStory: StoryData = {
           nextNodeId: "node_5",
           visibleCharacters: [
             { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2 },
-            { characterId: "male_mc", expression: "neutral", position: "right", scale: 1.5 },
+            { characterId: "female_mc", expression: "neutral", position: "right", scale: 1.8 },
           ],
         },
 
@@ -602,8 +602,8 @@ export const sampleStory: StoryData = {
           text: "Spicy or not spicy?",
           nextNodeId: "node_6",
           visibleCharacters: [
-            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2},
-            { characterId: "male_mc", expression: "neutral", position: "right", scale: 1.5 },
+            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2.5},
+            { characterId: "female_mc", expression: "neutral", position: "right", scale: 1.8 },
           ],
         },
 
@@ -622,8 +622,8 @@ export const sampleStory: StoryData = {
           text: "Sorry, what was that?",
           nextNodeId: "decision_3_1",
           visibleCharacters: [
-            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2 },
-            { characterId: "male_mc", expression: "neutral", position: "right", scale: 1.5 },
+            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2.5 },
+            { characterId: "female_mc", expression: "neutral", position: "right", scale: 1.8 },
           ],
         },
 
@@ -634,7 +634,7 @@ export const sampleStory: StoryData = {
           speakerName: "Narrator",
           text: "The noise is overwhelming. LK can't hear Uncle's question. Do you help?",
           visibleCharacters: [
-            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2 },
+            { characterId: "canteen_uncle", expression: "neutral", position: "left", scale: 2.5},
             { characterId: "male_mc", expression: "neutral", position: "center", scale: 1.5 },
             { characterId: "female_mc", expression: "neutral", position: "right", scale: 1.8 },
           ],
@@ -678,7 +678,7 @@ export const sampleStory: StoryData = {
           text: "Aiya, never mind! Spicy for you!",
           nextNodeId: "lk_gets_spicy",
           visibleCharacters: [
-            { characterId: "canteen_uncle", expression: "neutral", position: "center", scale: 2 },
+            { characterId: "canteen_uncle", expression: "neutral", position: "center", scale: 2.5 },
           ],
         },
 
@@ -869,6 +869,7 @@ Now they're trying a third time. The environment is very noisy because they chos
 
 Evaluate their third attempt. If they adapted (used gestures, wrote something down, moved closer, spoke more clearly facing you), respond positively. If they just kept trying to talk normally, express frustration about the noisy seating choice.
 
+IMPORTANT: Respond in FIRST PERSON as LK. Do NOT refer to yourself in the third person (e.g., don't say "LK feels...", say "I feel...").
 IMPORTANT: In your evaluation, mention that the noisy seating choice made communication difficult.
 
 Their relationship with you: {relationship_lk}`,
@@ -925,6 +926,7 @@ Their relationship with you: {relationship_lk}`,
 
 The environment is peaceful and you can focus on the conversation much better. Respond to their conversation starter warmly.
 
+IMPORTANT: Respond in FIRST PERSON as LK. Do NOT refer to yourself in the third person (e.g., don't say "LK feels...", say "I feel...").
 IMPORTANT: In your evaluation, praise them for choosing a quiet seating spot, which made communication much easier for you.
 
 Their relationship with you: {relationship_lk}
@@ -1018,13 +1020,7 @@ Did they help you at the laksa stall earlier? {helped_lk_canteen}`,
               id: "mid_score_path",
               text: "Continue",
               nextNodeId: "ending_mid",
-              condition: { variable: "relationship_lk", operator: ">=", value: 50 },
-            },
-            {
-              id: "low_score_path",
-              text: "Continue",
-              nextNodeId: "ending_low",
-              condition: { variable: "relationship_lk", operator: "<", value: 50 },
+              condition: { variable: "relationship_lk", operator: "<=", value: 80 },
             },
           ],
         },

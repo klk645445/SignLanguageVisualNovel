@@ -45,7 +45,6 @@ export function AudioProvider({
   const [isMuted, setIsMuted] = useState(false);
   const [currentBgmSrc, setCurrentBgmSrc] = useState<string | null>(null);
   const [pendingBgm, setPendingBgm] = useState<string | null>(null);
-  const intentionalPause = useRef(false); // Track if pause was intentional (from our code)
 
   // Initialize BGM audio element
   useEffect(() => {
@@ -57,33 +56,20 @@ export function AudioProvider({
 
   // Handle user interaction to start pending audio (browser autoplay policy)
   useEffect(() => {
-    if (!pendingBgm || isBgmPlaying) return;
+    if (!pendingBgm) return;
 
     const tryPlayPendingAudio = () => {
-      if (!pendingBgm) return;
+      if (!pendingBgm || isBgmPlaying) return;
       
       // Create a fresh audio element on user interaction
       const audio = new Audio(pendingBgm);
       audio.loop = true;
       audio.volume = isMuted ? 0 : bgmVolume;
       
-      // Prevent external media controls (AirPods, media keys) from pausing
-      audio.addEventListener("pause", () => {
-        // Auto-resume if paused externally (not by our code)
-        if (!audio.ended && !intentionalPause.current) {
-          audio.play().catch(() => {});
-        }
-        // Reset the flag after handling
-        intentionalPause.current = false;
-      });
-      
-      // Reset intentional pause flag when starting playback
-      intentionalPause.current = false;
-      
       audio.play()
         .then(() => {
           // Replace the ref with the working audio element
-          if (bgmRef.current) {
+          if (bgmRef.current && bgmRef.current !== audio) {
             bgmRef.current.pause();
           }
           bgmRef.current = audio;
@@ -101,9 +87,9 @@ export function AudioProvider({
     };
 
     // Add listeners
-    window.addEventListener("click", tryPlayPendingAudio);
-    window.addEventListener("keydown", tryPlayPendingAudio);
-    window.addEventListener("touchstart", tryPlayPendingAudio);
+    window.addEventListener("click", tryPlayPendingAudio, { once: true });
+    window.addEventListener("keydown", tryPlayPendingAudio, { once: true });
+    window.addEventListener("touchstart", tryPlayPendingAudio, { once: true });
 
     return () => {
       window.removeEventListener("click", tryPlayPendingAudio);
@@ -133,14 +119,6 @@ export function AudioProvider({
     bgmRef.current.loop = loop;
     bgmRef.current.volume = isMuted ? 0 : bgmVolume;
     
-    // Prevent external media controls from pausing
-    bgmRef.current.onpause = () => {
-      // Auto-resume if we didn't intentionally pause
-      if (bgmRef.current && !bgmRef.current.ended && !intentionalPause.current) {
-        bgmRef.current.play().catch(() => {});
-      }
-    };
-    
     // Handle autoplay restrictions
     const playPromise = bgmRef.current.play();
     if (playPromise !== undefined) {
@@ -165,7 +143,6 @@ export function AudioProvider({
   }, [bgmVolume, isMuted, currentBgmSrc, pendingBgm]);
 
   const stopBgm = useCallback(() => {
-    intentionalPause.current = true;
     if (bgmRef.current) {
       bgmRef.current.pause();
       bgmRef.current.currentTime = 0;
@@ -175,7 +152,6 @@ export function AudioProvider({
   }, []);
 
   const pauseBgm = useCallback(() => {
-    intentionalPause.current = true;
     if (bgmRef.current) {
       bgmRef.current.pause();
       setIsBgmPlaying(false);
@@ -184,7 +160,6 @@ export function AudioProvider({
 
   const resumeBgm = useCallback(() => {
     if (bgmRef.current && currentBgmSrc) {
-      intentionalPause.current = false;
       const playPromise = bgmRef.current.play();
       if (playPromise !== undefined) {
         playPromise
@@ -248,9 +223,6 @@ export function AudioControls() {
     setSfxVolume,
     isMuted,
     toggleMute,
-    isBgmPlaying,
-    resumeBgm,
-    pauseBgm,
   } = useAudio();
 
   return (
@@ -276,29 +248,6 @@ export function AudioControls() {
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
             </svg>
             Mute
-          </>
-        )}
-      </button>
-
-      {/* BGM Play/Pause */}
-      <button
-        onClick={isBgmPlaying ? pauseBgm : resumeBgm}
-        className="w-full p-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors flex items-center justify-center gap-2"
-      >
-        {isBgmPlaying ? (
-          <>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <rect x="6" y="4" width="4" height="16" />
-              <rect x="14" y="4" width="4" height="16" />
-            </svg>
-            Pause Music
-          </>
-        ) : (
-          <>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
-              <polygon points="5,3 19,12 5,21" />
-            </svg>
-            Play Music
           </>
         )}
       </button>

@@ -128,15 +128,12 @@ function VisualNovelEngineInner({
     }
   }, [currentNode, getBackgroundUrl]);
 
-  // Play default background music when game starts
+  // Cleanup BGM when component unmounts
   useEffect(() => {
-    if (gameState.gameStarted && story.settings?.defaultBgm) {
-      playBgm(story.settings.defaultBgm, true);
-    }
     return () => {
       stopBgm();
     };
-  }, [gameState.gameStarted, story.settings?.defaultBgm, playBgm, stopBgm]);
+  }, [stopBgm]);
 
   // Handle node audio (BGM changes or SFX)
   useEffect(() => {
@@ -577,7 +574,7 @@ function VisualNovelEngineInner({
       {currentNode.type === "end" && (
         <button
           onClick={() => setGameState(prev => ({ ...prev, showFeedbackScreen: true }))}
-          className="absolute bottom-32 left-1/2 transform -translate-x-1/2 
+          className="absolute top-24 left-1/2 transform -translate-x-1/2 
             py-3 px-8 bg-yellow-500 hover:bg-yellow-600 text-black font-bold 
             rounded-lg transition-all hover:scale-105 z-40"
         >
