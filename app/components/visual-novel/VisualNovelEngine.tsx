@@ -62,6 +62,9 @@ function VisualNovelEngineInner({
     };
   });
 
+  // State for showing/hiding debug menu
+  const [showDebug, setShowDebug] = useState(true);
+
   // Handle name submission - play audio immediately on user click to satisfy browser autoplay policy
   const handleNameSubmit = useCallback((name: string) => {
     // Play BGM immediately within the user gesture context
@@ -316,6 +319,9 @@ function VisualNovelEngineInner({
       }
       if (e.key === "Escape") {
         setShowMenu((prev) => !prev);
+      }
+      if (e.key === "d" || e.key === "D") {
+        setShowDebug((prev) => !prev);
       }
     };
 
@@ -674,7 +680,7 @@ function VisualNovelEngineInner({
       )}
 
       {/* Debug Info (remove in production) */}
-      {process.env.NODE_ENV === "development" && (
+      {process.env.NODE_ENV === "development" && showDebug && (
         <div className="absolute top-4 left-4 bg-black/70 text-white text-xs p-2 rounded max-w-xs">
           <p>Scene: {gameState.currentSceneId}</p>
           <p>Node: {gameState.currentNodeId}</p>

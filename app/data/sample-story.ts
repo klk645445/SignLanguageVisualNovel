@@ -38,7 +38,7 @@ export const sampleStory: StoryData = {
     {
       id: "female_mc",
       name: "Female Main Character",
-      displayName: "Bob",
+      displayName: "LK",
       sprites: {
         sad: "/characters/female_mc/female_mc_sad.png",
         happy: "/characters/female_mc/female_mc_happy.png",
