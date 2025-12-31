@@ -2,15 +2,20 @@
 
 An interactive visual novel game built with Next.js that helps players learn about interacting with deaf and hard of hearing individuals. Features LLM-powered dynamic conversations using Google's Gemini API.
 
+Try it here: [Sign Language Visual Novel](sign-language-visual-novel.vercel.app)
+
+## Team Members
+[Kway Ler Koon](https://github.com/klk645445), [Vaisiya Balakrishnan](https://github.com/vaisiyabalakrishnan), [Pearl Pay](https://github.com/ily2soul), [Cynthia Ng](https://github.com/cxthia), [Atharshlakshmi Vijayakumar](https://github.com/atharshlakshmi)
+
 ## Features
 
-- 🎮 Interactive visual novel gameplay with branching storylines
-- 🤖 LLM-powered dynamic character responses using Gemini API
-- 🎵 Background music and sound effects
-- 💬 Typewriter-style dialogue with text scroll sounds
-- 📊 Relationship tracking system
-- 🎨 Character sprites with multiple expressions
-- 💾 Save/Load game state
+- Interactive visual novel gameplay with branching storylines
+- LLM-powered dynamic character responses using Gemini API
+- Background music and sound effects
+- Typewriter-style dialogue with text scroll sounds
+- Relationship tracking system
+- Character sprites with multiple expressions
+- Save/Load game state
 
 ## Getting Started
 

@@ -4,17 +4,17 @@ This is a customizable visual novel framework built with Next.js, React, and Typ
 
 ## Features
 
-- 🎭 **Multiple Characters** - Define characters with different sprites/expressions
-- 💬 **Dialogue System** - Typewriter text effect with click-to-advance
-- 🔀 **Branching Choices** - Create decision trees with multiple paths
-- 🎨 **Custom Backgrounds** - Set backgrounds for each scene
-- 💾 **Save/Load System** - Save progress to localStorage
-- 📱 **Responsive Design** - Works on desktop and mobile
-- ⌨️ **Keyboard Navigation** - Press Enter/Space to advance, ESC for menu
-- 📝 **Name Input** - Prompt player for their name at game start
-- ✏️ **Text Input** - Capture user text responses and store in variables
-- 🤖 **LLM Integration** - AI-evaluated responses with dynamic character reactions
-- 📏 **Character Scaling** - Scale character sprites globally or per-scene
+- **Multiple Characters** - Define characters with different sprites/expressions
+- **Dialogue System** - Typewriter text effect with click-to-advance
+- **Branching Choices** - Create decision trees with multiple paths
+- **Custom Backgrounds** - Set backgrounds for each scene
+- **Save/Load System** - Save progress to localStorage
+- **Responsive Design** - Works on desktop and mobile
+- **Keyboard Navigation** - Press Enter/Space to advance, ESC for menu
+- **Name Input** - Prompt player for their name at game start
+- **Text Input** - Capture user text responses and store in variables
+- **LLM Integration** - AI-evaluated responses with dynamic character reactions
+- **Character Scaling** - Scale character sprites globally or per-scene
 
 ## Project Structure
 
