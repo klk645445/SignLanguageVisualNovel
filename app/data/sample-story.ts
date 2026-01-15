@@ -25,7 +25,7 @@ export const sampleStory: StoryData = {
     {
       id: "male_mc",
       name: "Male Main Character",
-      displayName: "LK",
+      displayName: "Alex",
       sprites: {
         neutral: "/characters/male_mc/male_mc_neutral.png",
         happy: "/characters/male_mc/male_mc_happy.png",
@@ -38,7 +38,7 @@ export const sampleStory: StoryData = {
     {
       id: "female_mc",
       name: "Female Main Character",
-      displayName: "LK",
+      displayName: "Sarah",
       sprites: {
         sad: "/characters/female_mc/female_mc_sad.png",
         happy: "/characters/female_mc/female_mc_happy.png",
